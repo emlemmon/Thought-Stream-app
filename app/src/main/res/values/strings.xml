@@ -5,4 +5,8 @@
     <string name="thought_categories_btn_text">Thought Categories</string>
     <string name="title_hint">Title</string>
     <string name="select_category_text">[Select a Category]</string>
+    <string name="button_reset">Reset</string>
+    <string name="button_start">Start</string>
+    <string name="button_pause">Pause</string>
+    <string name="timer_text">00:00</string>
 </resources>
