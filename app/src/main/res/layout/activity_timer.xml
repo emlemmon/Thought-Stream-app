@@ -1,0 +1,50 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimerActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eee"
+        tools:context="com.example.parsaniahardik.progressanimation.MainActivity">
+        <ProgressBar
+            android:id="@+id/circularProgressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:indeterminateOnly="false"
+            android:max="100"
+            android:progress="50"
+            android:layout_centerInParent="true"
+            android:progressDrawable="@drawable/circular"
+            android:secondaryProgress="100"
+            />
+
+        <!--        <ImageView
+                    android:layout_width="138dp"
+                    android:layout_height="136dp" />
+                   android:background="@drawable/whitecircle"
+         />-->
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="83dp"
+            android:layout_marginTop="242dp"
+            android:layout_marginEnd="79dp"
+            android:layout_marginBottom="240dp"
+            android:gravity="center"
+            android:text="25%"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

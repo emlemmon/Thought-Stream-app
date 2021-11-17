@@ -1,24 +1,24 @@
-package com.example.progressbarpractice;
+package com.example.thoughtstream;
 
 import android.animation.ObjectAnimator;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class TimerActivity extends AppCompatActivity {
+
     private final Handler handler = new Handler();
+
     TextView tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_timer);
         final ProgressBar mProgress = (ProgressBar) findViewById(R.id.circularProgressbar);
         mProgress.setProgress(0);   // Main Progress
         mProgress.setSecondaryProgress(100); // Secondary Progress

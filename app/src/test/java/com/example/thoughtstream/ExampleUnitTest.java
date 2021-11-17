@@ -1,4 +1,4 @@
-package com.example.progressbarpractice;
+package com.example.thoughtstream;
 
 import org.junit.Test;
 
