@@ -1,11 +1,14 @@
 package com.example.progressbarpractice;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,6 +18,9 @@ import androidx.core.content.ContextCompat;
 public class MainActivity extends AppCompatActivity {
     private final Handler handler = new Handler();
     TextView tv;
+
+    private Button TESTINGBUTTON;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,5 +56,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+
+        TESTINGBUTTON = findViewById(R.id.button_send);
+        TESTINGBUTTON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goTotimer(v);
+            }
+        });
+
+    }
+
+    public void goTotimer (View view) {
+        Intent intent = new Intent(this, TimerActivity.class);
+        startActivity(intent);
     }
 }
