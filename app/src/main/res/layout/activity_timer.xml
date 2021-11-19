@@ -14,7 +14,6 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="244dp"
         android:text="@string/timer_text"
-        android:textColor="@android:color/black"
         android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
