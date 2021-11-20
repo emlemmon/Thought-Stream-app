@@ -1,48 +1,67 @@
 package com.example.thoughtstream;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 
-import java.lang.ref.WeakReference;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Vector;
+import java.util.Set;
 
-public class CategoryFunctions{
+public class CategoryFunctions extends AppCompatActivity {
 
     private static Gson gson;
-    private Vector<String> names;
-    private Map<String, LinkedList<String>> categoryList;
-    private static WeakReference<MainActivity> app;
 
-    CategoryFunctions(WeakReference<MainActivity> app){
+    CategoryFunctions(){
         gson = new Gson();
-        names = new Vector<>();
-        CategoryFunctions.app = app;
-        getCategoryList();
     }
 
-    private void getCategoryList(){
-        String categoryConvert = "";
+    private Directory getMap(){
+        SharedPreferences pref = getSharedPreferences("categories", Context.MODE_PRIVATE);
+        String encrypted = pref.toString();
 
+        return gson.fromJson(encrypted, Directory.class);
     }
 
-    public Vector<String> load(int number, String category, boolean isBackward){
+    public Set<String> load(){
 
-        return names;
+        return getMap().categories.keySet();
     }
 
     public boolean save(String name){
+        Directory cat = getMap();
 
+        if(cat.categories.containsKey(name)) {
+            return false;
+        }
+        else {
+            cat.categories.put(name, new LinkedList<>());
+        }
         return true;
     }
 
-    public boolean update(String category, String newName){
+    public boolean update(String oldName, String newName){
+        Directory cat = getMap();
 
-        return true;
+        if(cat.categories.containsKey(oldName)){
+            cat.categories.put(newName, cat.categories.get(oldName));
+            cat.categories.remove(oldName);
+            return true;
+        }
+
+        return false;
     }
 
-    public boolean delete(String category) {
+    public boolean delete(String name) {
+        Directory cat = getMap();
 
-        return true;
+        if(cat.categories.containsKey(name)){
+            cat.categories.remove(name);
+            return true;
+        }
+
+        return false;
     }
 }
