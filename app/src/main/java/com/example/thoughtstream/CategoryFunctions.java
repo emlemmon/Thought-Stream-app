@@ -14,6 +14,7 @@ public class CategoryFunctions extends AppCompatActivity {
 
     private static Gson gson;
 
+
     CategoryFunctions(){
         gson = new Gson();
     }
@@ -23,6 +24,13 @@ public class CategoryFunctions extends AppCompatActivity {
         String encrypted = pref.toString();
 
         return gson.fromJson(encrypted, Directory.class);
+    }
+    private void saveMap(Directory cat){
+        SharedPreferences pref = getSharedPreferences("categories", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        String encrypted = gson.toJson(cat);
+        edit.putString("categories", encrypted);
+        edit.apply();
     }
 
     public Set<String> load(){
@@ -38,8 +46,10 @@ public class CategoryFunctions extends AppCompatActivity {
         }
         else {
             cat.categories.put(name, new LinkedList<>());
+            saveMap(cat);
+            return true;
         }
-        return true;
+
     }
 
     public boolean update(String oldName, String newName){
@@ -48,6 +58,7 @@ public class CategoryFunctions extends AppCompatActivity {
         if(cat.categories.containsKey(oldName)){
             cat.categories.put(newName, cat.categories.get(oldName));
             cat.categories.remove(oldName);
+            saveMap(cat);
             return true;
         }
 
@@ -59,6 +70,7 @@ public class CategoryFunctions extends AppCompatActivity {
 
         if(cat.categories.containsKey(name)){
             cat.categories.remove(name);
+            saveMap(cat);
             return true;
         }
 
