@@ -1,12 +1,17 @@
 package com.example.thoughtstream;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class ThoughtCategoriesActivity extends AppCompatActivity {
@@ -24,8 +29,9 @@ public class ThoughtCategoriesActivity extends AppCompatActivity {
         plusImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.fragment_container_view_tag, new NewCategoryFragment(), "NewCategoryFragment").addToBackStack(null).commit();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                NewCategoryFragment dialogFragment = new NewCategoryFragment();
+                dialogFragment.show(fragmentManager, "Sample Fragment");
             }
         });
     }
