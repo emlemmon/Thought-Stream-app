@@ -11,6 +11,7 @@
     <string name="timer_text">00:00</string>
     <string name="timer_edit_text_input_hint">Minutes</string>
     <string name="timer_button_set_text">Set</string>
-    <string name="category_title_hint">Category Title</string>
+    <string name="category_name_hint">Category Name</string>
     <string name="create_text">Create</string>
+    <string name="title_text">Create A Category</string>
 </resources>
