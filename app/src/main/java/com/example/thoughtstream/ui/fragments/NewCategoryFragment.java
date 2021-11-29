@@ -1,17 +1,15 @@
-package com.example.thoughtstream;
+package com.example.thoughtstream.ui.fragments;
 
-import android.app.Dialog;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.thoughtstream.R;
 
 import java.util.Objects;
 

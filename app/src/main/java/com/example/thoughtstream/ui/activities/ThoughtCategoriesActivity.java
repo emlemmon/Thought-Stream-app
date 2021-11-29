@@ -1,18 +1,15 @@
-package com.example.thoughtstream;
+package com.example.thoughtstream.ui.activities;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
+import com.example.thoughtstream.ui.fragments.NewCategoryFragment;
+import com.example.thoughtstream.R;
 
 public class ThoughtCategoriesActivity extends AppCompatActivity {
 
@@ -34,5 +31,9 @@ public class ThoughtCategoriesActivity extends AppCompatActivity {
                 dialogFragment.show(fragmentManager, "Sample Fragment");
             }
         });
+    }
+
+    private void loadCategories() {
+
     }
 }

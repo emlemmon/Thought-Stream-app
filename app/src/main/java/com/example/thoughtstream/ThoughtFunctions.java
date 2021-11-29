@@ -1,5 +1,6 @@
 package com.example.thoughtstream;
 
+import com.example.thoughtstream.ui.activities.MainActivity;
 import com.google.gson.Gson;
 
 import java.lang.ref.WeakReference;
