@@ -3,33 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient"
     tools:context=".MainActivity">
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/app_bar"
-            app:title="@string/app_name"
-            app:titleTextColor="#081768"
-            android:background="#fad2e1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
 
 
     <Button
         android:id="@+id/button_new_thought"
-        android:layout_width="281dp"
-        android:layout_height="76dp"
-        android:backgroundTint="#081768"
-        android:cursorVisible="true"
+        android:layout_width="261dp"
+        android:layout_height="66dp"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/new_thought_btn_text"
-        android:textSize="20sp"
-        app:cornerRadius="40dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/button_thought_categories"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -38,30 +21,23 @@
 
     <Button
         android:id="@+id/button_thought_timer"
-        android:layout_width="281dp"
-        android:layout_height="76dp"
-        android:backgroundTint="#081768"
-        android:cursorVisible="true"
+        android:layout_width="261dp"
+        android:layout_height="66dp"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/thought_timer_btn_text"
-        android:textSize="20sp"
-        app:cornerRadius="40dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/button_new_thought"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_thought_categories"
-        android:layout_width="281dp"
-        android:layout_height="76dp"
-        android:backgroundTint="#081768"
-        android:cursorVisible="true"
+        android:layout_width="261dp"
+        android:layout_height="66dp"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/thought_categories_btn_text"
-        android:textSize="20sp"
-        app:cornerRadius="40dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

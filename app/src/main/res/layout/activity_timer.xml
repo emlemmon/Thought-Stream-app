@@ -4,34 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
     tools:context=".TimerActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fad2e1"
+            app:title="@string/thought_timer_btn_text"
+            app:titleTextColor="#081768" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <EditText
         android:id="@+id/edit_text_input"
         android:layout_width="187dp"
         android:layout_height="56dp"
-        android:layout_marginTop="51dp"
         android:hint="@string/timer_edit_text_input_hint"
         android:inputType="number"
         android:maxLength="4"
         app:layout_constraintBottom_toTopOf="@+id/text_view_countdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35000002" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="1.0" />
+
 
     <Button
         android:id="@+id/button_set"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
+        android:layout_marginTop="132dp"
         android:layout_marginEnd="4dp"
+        android:backgroundTint="#081768"
+        android:cursorVisible="true"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/timer_button_set_text"
+        android:textSize="20sp"
+        app:cornerRadius="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toEndOf="@+id/edit_text_input"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/text_view_countdown"
@@ -39,7 +59,7 @@
         android:layout_height="0dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="188dp"
         android:text="@string/timer_text"
         android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +74,12 @@
         android:layout_below="@+id/text_view_countdown"
         android:layout_alignParentStart="true"
         android:layout_marginTop="17dp"
+        android:backgroundTint="#081768"
+        android:cursorVisible="true"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/button_start"
+        android:textSize="20sp"
+        app:cornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.687"
@@ -64,15 +89,20 @@
 
     <Button
         android:id="@+id/button_pause"
-        android:layout_width="88dp"
+        android:layout_width="108dp"
         android:layout_height="48dp"
         android:layout_below="@+id/text_view_countdown"
         android:layout_alignParentStart="true"
         android:layout_marginStart="28dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="128dp"
+        android:backgroundTint="#081768"
+        android:cursorVisible="true"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/button_pause"
+        android:textSize="20sp"
         android:visibility="invisible"
+        app:cornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_reset"
@@ -82,14 +112,19 @@
 
     <Button
         android:id="@+id/button_reset"
-        android:layout_width="88dp"
+        android:layout_width="108dp"
         android:layout_height="48dp"
         android:layout_below="@+id/text_view_countdown"
         android:layout_alignParentStart="true"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="128dp"
+        android:backgroundTint="#081768"
+        android:cursorVisible="true"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/button_reset"
+        android:textSize="20sp"
         android:visibility="invisible"
+        app:cornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_start"
         app:layout_constraintHorizontal_bias="1.0"

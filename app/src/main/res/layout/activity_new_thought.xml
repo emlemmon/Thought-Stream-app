@@ -2,18 +2,34 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_gradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/app_bar"
+            app:title="@string/new_thought_btn_text"
+            app:titleTextColor="#081768"
+            android:background="#fad2e1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <EditText
         android:id="@+id/editTextTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif-condensed"
         android:hint="@string/title_hint"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintDimensionRatio="7:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +46,8 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:text="@string/select_category_text"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-condensed"
         app:layout_constraintDimensionRatio="10:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,8 +64,9 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:hint="Enter thought here"
+        android:fontFamily="sans-serif-condensed"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
