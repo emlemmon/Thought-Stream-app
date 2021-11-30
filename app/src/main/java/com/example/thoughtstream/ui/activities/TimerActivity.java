@@ -1,11 +1,8 @@
-package com.example.thoughtstream;
+package com.example.thoughtstream.ui.activities;
 
-import android.app.AlarmManager;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -14,6 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.thoughtstream.R;
+
 import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
