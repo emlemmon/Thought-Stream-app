@@ -1,4 +1,4 @@
-package com.example.thoughtstream;
+package com.example.thoughtstream.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
