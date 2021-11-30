@@ -8,11 +8,16 @@ public class Directory {
 
     Map<String, LinkedList<String>> categories;
 
-    // Constructor
+    // Constructors
+    public Directory(){
+
+    }
+
     public Directory(TreeMap<String, LinkedList<String>> categories){
         this.categories = categories;
     }
 
+    // Getters and Setters
     public Map<String, LinkedList<String>> getCategories() {
         return categories;
     }

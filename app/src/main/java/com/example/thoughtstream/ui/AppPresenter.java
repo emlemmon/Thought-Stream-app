@@ -21,7 +21,7 @@ public class AppPresenter {
 
         // Here we are declaring an instance of our Directory Class.
         // Still need to add more parameters and pass valid data.
-        return new Directory(categories);
+        return new Directory();
     }
 
     // Link between Presenter and MainActivity
