@@ -23,6 +23,44 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/CircularDeterminateProgressBar"
+        android:layout_width="413dp"
+        android:layout_height="378dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/minutesPicker" />
+
+    <NumberPicker
+        android:id="@+id/hoursPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_countdown"
+        app:layout_constraintEnd_toStartOf="@+id/minutesPicker"
+        app:layout_constraintHorizontal_bias="0.577"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/numPickerHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="36dp"
+        android:text="@string/timer_activity_num_picker_hours_prompt"
+        android:textSize="23.8sp"
+        app:layout_constraintBottom_toTopOf="@+id/hoursPicker"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <NumberPicker
         android:id="@+id/minutesPicker"
@@ -37,16 +75,15 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_bias="0.0" />
 
-
-    <NumberPicker
-        android:id="@+id/hoursPicker"
+    <TextView
+        android:id="@+id/numPickerMinutes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/text_view_countdown"
-        app:layout_constraintEnd_toStartOf="@+id/minutesPicker"
-        app:layout_constraintHorizontal_bias="0.577"
+        android:layout_marginTop="32dp"
+        android:text="@string/timer_activity_num_picker_minutes_prompt"
+        android:textSize="23.8sp"
+        app:layout_constraintBottom_toTopOf="@+id/minutesPicker"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_bias="0.0" />
@@ -62,128 +99,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/minutesPicker"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    <Button
-        android:id="@+id/button_set"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="284dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="#081768"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/timer_button_set_text"
-        android:textSize="20sp"
-        app:cornerRadius="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/minutesPicker"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    <TextView
-        android:id="@+id/text_view_countdown"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="268dp"
-        android:text="@string/timer_text"
-        android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    <Button
-        android:id="@+id/button_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_view_countdown"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="35dp"
-        android:layout_marginBottom="244dp"
-        android:backgroundTint="#081768"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/button_start"
-        android:textSize="20sp"
-        app:cornerRadius="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_countdown"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/button_pause"
-        android:layout_width="108dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/text_view_countdown"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="152dp"
-        android:backgroundTint="#081768"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/button_pause"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:cornerRadius="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_countdown"
-        tools:visibility="visible" />
-
-    <Button
-        android:id="@+id/button_reset"
-        android:layout_width="108dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/text_view_countdown"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="#081768"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/button_reset"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:cornerRadius="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_start"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/numPickerHours"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="36dp"
-        android:text="@string/timer_activity_num_picker_hours_prompt"
-        android:textSize="23.8sp"
-        app:layout_constraintBottom_toTopOf="@+id/hoursPicker"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/timer_activity_num_picker_minutes_prompt"
-        android:textSize="23.8sp"
-        app:layout_constraintBottom_toTopOf="@+id/minutesPicker"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
+        android:id="@+id/numPickerSeconds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -193,8 +113,91 @@
         app:layout_constraintBottom_toTopOf="@+id/secondsPicker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.037"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/numPickerMinutes"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button_set"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="19dp"
+        android:backgroundTint="#081768"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/timer_button_set_text"
+        android:textSize="20sp"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="464dp"
+        android:text="@string/timer_text"
+        android:textSize="60sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/appBarLayout" />
+
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_countdown"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="19dp"
+        android:backgroundTint="#081768"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/button_start"
+        android:textSize="20sp"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.905"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_pause"
+        android:layout_width="108dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/text_view_countdown"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#081768"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/button_pause"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_reset"
+        android:layout_width="108dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/text_view_countdown"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="19dp"
+        android:backgroundTint="#081768"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/button_reset"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
