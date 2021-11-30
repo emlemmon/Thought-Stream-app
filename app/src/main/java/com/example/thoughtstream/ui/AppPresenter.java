@@ -3,6 +3,9 @@ package com.example.thoughtstream.ui;
 import com.example.thoughtstream.utils.Directory;
 import com.example.thoughtstream.ui.fragments.AppView;
 
+import java.util.LinkedList;
+import java.util.TreeMap;
+
 // This will act as the Presenter
 public class AppPresenter {
 
@@ -17,9 +20,8 @@ public class AppPresenter {
     public Directory GetAppFromModel(){
 
         // Here we are declaring an instance of our Directory Class.
-        // Still need to add more parameters.
-
-        return new Directory(/*Add a map here.*/)
+        // Still need to add more parameters and pass valid data.
+        return new Directory(categories);
     }
 
     // Link between Presenter and MainActivity

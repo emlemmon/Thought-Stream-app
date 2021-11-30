@@ -9,13 +9,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thoughtstream.R;
+import com.example.thoughtstream.ui.AppPresenter;
+import com.example.thoughtstream.ui.fragments.AppView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.LinkedList;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity implements AppView {
+
+    // Linking Activity with Presenter
+    AppPresenter appPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Instantiate the Presenter
+        appPresenter = new AppPresenter(this);
     }
 
     @Override
@@ -49,4 +60,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onGetCategoriesMap(Map<String, LinkedList<String>> categories) {
+
+    }
 }
