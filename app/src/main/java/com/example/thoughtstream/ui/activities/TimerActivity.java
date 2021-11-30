@@ -1,29 +1,33 @@
 package com.example.thoughtstream.ui.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thoughtstream.R;
 
+import java.util.Calendar;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class TimerActivity extends AppCompatActivity {
-    private EditText mEditTextInput;
     private TextView mTextViewCountDown;
     private Button mButtonSet;
     private Button mButtonStart;
     private Button mButtonPause;
     private Button mButtonReset;
-    
+
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
     
@@ -35,30 +39,37 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
-        
-        mEditTextInput = findViewById(R.id.edit_text_input);
+
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
         
         mButtonSet = findViewById(R.id.button_set);
         mButtonStart = findViewById(R.id.button_start);
         mButtonPause = findViewById(R.id.button_pause);
         mButtonReset = findViewById(R.id.button_reset);
+        NumberPicker hoursPicker = findViewById(R.id.hoursPicker);
+        NumberPicker minutesPicker = findViewById(R.id.minutesPicker);
+        NumberPicker secondsPicker = findViewById(R.id.secondsPicker);
+
+        hoursPicker.setMinValue(0);
+        minutesPicker.setMinValue(0);
+        secondsPicker.setMinValue(0);
+        hoursPicker.setMaxValue(24);
+        minutesPicker.setMaxValue(59);
+        secondsPicker.setMaxValue(59);
+        AtomicLong hoursInMillis = new AtomicLong();
+        AtomicLong minutesInMillies = new AtomicLong();
+        AtomicLong secondsInMillies = new AtomicLong();
+
+        hoursPicker.setOnValueChangedListener((picker, oldVal, newVal) -> hoursInMillis.set(((long) newVal * 60) * 60000));
+
+        minutesPicker.setOnValueChangedListener((picker, oldVal, newVal) -> minutesInMillies.set((long) newVal * 60000));
+
+        secondsPicker.setOnValueChangedListener((picker, oldVal, newVal) -> secondsInMillies.set((long) newVal * 1000));
 
         mButtonSet.setOnClickListener(v -> {
-            String input = mEditTextInput.getText().toString();
-            if (input.length() == 0) {
-                Toast.makeText(TimerActivity.this, "Field cannot be empty", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            long millisInput = Long.parseLong(input) * 60000;
-            if (millisInput == 0) {
-                Toast.makeText(TimerActivity.this, "Please enter a positive number", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            long millisInput =  hoursInMillis.get() + minutesInMillies.get() + secondsInMillies.get();
 
             setTime(millisInput);
-            mEditTextInput.setText("");
         });
         
         mButtonStart.setOnClickListener(v -> {
@@ -83,8 +94,35 @@ public class TimerActivity extends AppCompatActivity {
         closeKeyboard();
     }
 
+    private void startAlarm(Calendar alarmTime) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        if (alarmTime.before(Calendar.getInstance())) {
+            alarmTime.add(Calendar.DATE, 1);
+        }
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+    }
+
+    private void cancelAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.cancel(pendingIntent);
+    }
+
     private void startTimer() {
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
+        int hours = (int) (mEndTime / 1000) / 3600;
+        int minutes = (int) ((mEndTime / 1000) % 3600) / 60;
+        Calendar alarmTime = Calendar.getInstance();
+        alarmTime.set(Calendar.HOUR_OF_DAY, hours);
+        alarmTime.set(Calendar.MINUTE, minutes);
+        alarmTime.set(Calendar.SECOND, 0);
+        startAlarm(alarmTime);
 
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
@@ -105,12 +143,14 @@ public class TimerActivity extends AppCompatActivity {
 
     private void pauseTimer() {
         mCountDownTimer.cancel();
+        cancelAlarm();
         mTimerRunning = false;
         updateWatchInterface();
     }
 
     private void resetTimer() {
         mTimeLeftInMillis = mStartTimeInMillis;
+        cancelAlarm();
         updateCountDownText();
         updateWatchInterface();
     }
@@ -134,13 +174,11 @@ public class TimerActivity extends AppCompatActivity {
 
     private void updateWatchInterface() {
         if (mTimerRunning) {
-            mEditTextInput.setVisibility(View.INVISIBLE);
             mButtonSet.setVisibility(View.INVISIBLE);
             mButtonReset.setVisibility(View.INVISIBLE);
             mButtonStart.setVisibility(View.INVISIBLE);
             mButtonPause.setVisibility(View.VISIBLE);
         } else {
-            mEditTextInput.setVisibility(View.VISIBLE);
             mButtonSet.setVisibility(View.VISIBLE);
             mButtonStart.setVisibility(View.VISIBLE);
             mButtonPause.setVisibility(View.INVISIBLE);
