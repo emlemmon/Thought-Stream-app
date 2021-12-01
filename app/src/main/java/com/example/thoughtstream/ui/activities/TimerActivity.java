@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thoughtstream.R;
+import com.example.thoughtstream.utils.AlertReceiver;
 
 import java.util.Calendar;
 import java.util.Locale;
