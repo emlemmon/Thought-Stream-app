@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thoughtstream.R;
 import com.example.thoughtstream.ui.AppPresenter;
-import com.example.thoughtstream.ui.fragments.AppView;
+import com.example.thoughtstream.ui.AppView;
 
 import java.util.LinkedList;
 import java.util.Map;

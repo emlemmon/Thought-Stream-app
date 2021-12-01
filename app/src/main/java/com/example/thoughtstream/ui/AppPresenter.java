@@ -1,10 +1,6 @@
 package com.example.thoughtstream.ui;
 
 import com.example.thoughtstream.utils.Directory;
-import com.example.thoughtstream.ui.fragments.AppView;
-
-import java.util.LinkedList;
-import java.util.TreeMap;
 
 // This will act as the Presenter
 public class AppPresenter {
