@@ -1,51 +1,116 @@
 package com.example.thoughtstream.utils;
 
-import com.example.thoughtstream.ui.activities.MainActivity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 
-import java.lang.ref.WeakReference;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.LinkedList;
-import java.util.Vector;
 
-public class ThoughtFunctions{
+public class ThoughtFunctions extends AppCompatActivity {
 
     private static Gson gson;
     private String defaultCategory;
-    private Vector<String> names;
-    private LinkedList<String> thoughtList;
-    private static WeakReference<MainActivity> app;
 
-    ThoughtFunctions(String category, WeakReference<MainActivity> app){
+    ThoughtFunctions(String category){
         gson = new Gson();
         defaultCategory = category;
-        names = new Vector<>();
-        ThoughtFunctions.app = app;
-        getThoughtList();
     }
 
-    private void getThoughtList(){
-        String categoryConvert = "";
+    private LinkedList<String> getThoughtList(){
+        SharedPreferences pref = getSharedPreferences("categories", Context.MODE_PRIVATE);
+        String encrypted = pref.toString();
+        Directory collection = gson.fromJson(encrypted, Directory.class);
 
+        return collection.categories.get(defaultCategory);
     }
 
-    public Vector<String> load(int number, String filename, boolean isBackward){
-
-        return names;
+    public Object[] loadDirectory(){
+        return getThoughtList().toArray();
     }
 
-    public boolean save(String name){
+    public String loadFile(String filename) throws IOException {
+        String result = "";
+        InputStream inputStream = openFileInput(filename);
+        if(inputStream != null) {
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String temp;
+            StringBuilder stringBuilder = new StringBuilder();
 
-        return true;
+            while((temp = bufferedReader.readLine()) != null){
+                stringBuilder.append(temp);
+                stringBuilder.append("\n");
+            }
+
+            inputStream.close();
+            result = stringBuilder.toString();
+        }
+        return result;
     }
 
-    public boolean update(String filename, String newName){
+    public boolean save(String name, String content){
+        String filename = defaultCategory + "_" + name + ".txt";
 
-        return true;
+        if(getThoughtList().contains(filename)){
+            return false;
+        }
+
+        boolean success = true;
+        try{
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(filename, Context.MODE_PRIVATE));
+            outputStreamWriter.write(content);
+            outputStreamWriter.close();
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+            success = false;
+        }
+
+        if(success && !getThoughtList().contains(filename))
+        {
+            LinkedList<String> thoughts = getThoughtList();
+            thoughts.add(filename);
+        }
+
+        return success;
+    }
+
+    public boolean update(String filename, String newName) throws IOException {
+
+        LinkedList<String> thoughts = getThoughtList();
+        int fileIndex = thoughts.indexOf(filename);
+        if(fileIndex > -1)
+        {
+            save(newName, loadFile(filename));
+            delete(filename);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public boolean delete(String filename) {
-
-        return true;
+        LinkedList<String> thoughts = getThoughtList();
+        int fileIndex = thoughts.indexOf(filename);
+        if(fileIndex > -1)
+        {
+            File dir = getFilesDir();
+            File file = new File(dir, filename);
+            thoughts.remove(fileIndex);
+            return (file.delete());
+        }
+        return false;
     }
 }
 

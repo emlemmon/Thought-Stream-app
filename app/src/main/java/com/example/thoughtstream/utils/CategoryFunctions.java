@@ -14,7 +14,6 @@ public class CategoryFunctions extends AppCompatActivity {
 
     private static Gson gson;
 
-
     CategoryFunctions(){
         gson = new Gson();
     }
