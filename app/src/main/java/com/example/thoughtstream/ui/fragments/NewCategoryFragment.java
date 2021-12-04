@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,7 +43,8 @@ public class NewCategoryFragment extends DialogFragment {
         Button saveButton = rootView.findViewById(R.id.buttonCreate);
         saveButton.setOnClickListener(view -> {
             CategoryFunctions directory = new CategoryFunctions(mContext);
-            String newCategoryName = rootView.findViewById(R.id.editTextCategoryTitle).toString();
+            EditText nameContents = rootView.findViewById(R.id.editTextCategoryTitle);
+            String newCategoryName = nameContents.getText().toString();
             try {
                 if(directory.save(newCategoryName)){
                     Toast.makeText(mContext, "Category Saved!", Toast.LENGTH_SHORT).show();

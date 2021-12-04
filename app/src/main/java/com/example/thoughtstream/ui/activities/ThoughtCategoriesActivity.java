@@ -1,7 +1,9 @@
 package com.example.thoughtstream.ui.activities;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,28 +13,35 @@ import com.example.thoughtstream.R;
 import com.example.thoughtstream.ui.fragments.NewCategoryFragment;
 import com.example.thoughtstream.utils.CategoryFunctions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ThoughtCategoriesActivity extends AppCompatActivity {
 
     CategoryFunctions cf;
     String[] directory;
+    ListView listView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thought_categories);
 
+        listView = findViewById(R.id.category_listview);
+
         cf = new CategoryFunctions(getApplicationContext());
-        Object[] temp = new Object[0];
         try {
             directory = cf.load();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        for(int i = 0; i < directory.length; i++)
-        {
+        List<String> ListElementsArrayList = new ArrayList<>(Arrays.asList(directory));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>
+                (ThoughtCategoriesActivity.this, android.R.layout.simple_list_item_1, ListElementsArrayList);
+        listView.setAdapter(adapter);
 
-        }
     }
 
     @Override
