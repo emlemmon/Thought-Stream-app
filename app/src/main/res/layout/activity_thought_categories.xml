@@ -7,15 +7,16 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/app_bar"
-            app:title="@string/thought_categories_btn_text"
-            app:titleTextColor="#081768"
-            android:background="#fad2e1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="wrap_content"
+            android:background="#fad2e1"
+            app:title="@string/thought_categories_btn_text"
+            app:titleTextColor="#081768"></androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -32,11 +33,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/cat_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
@@ -48,6 +51,7 @@
         android:layout_height="52dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
+        android:contentDescription='"Add Category"'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />

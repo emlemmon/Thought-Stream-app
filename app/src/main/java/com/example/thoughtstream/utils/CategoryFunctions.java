@@ -12,19 +12,19 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class CategoryFunctions extends AppCompatActivity {
 
-    WeakReference<Context> appContext;
+    private WeakReference<Context> appContext;
 
     public CategoryFunctions(Context context){
         appContext = new WeakReference<>(context);
     }
 
-    private TreeMap<String, LinkedList<String>> getMap() throws ClassNotFoundException {
+    protected TreeMap<String, LinkedList<String>> getMap() throws ClassNotFoundException {
         String filename = appContext.get().getFilesDir().getPath() + "/directory.tmp";
         Log.i("File Location", filename);
         TreeMap<String, LinkedList<String>> direct = null;
@@ -70,23 +70,17 @@ public class CategoryFunctions extends AppCompatActivity {
         oos.close();
     }
 
-    public Set<String> load() throws ClassNotFoundException {
+    public String[] load() throws ClassNotFoundException {
+        Object[] temp = getMap().keySet().toArray();
+        return Arrays.copyOf(temp, temp.length, String[].class);
 
-        return getMap().keySet();
     }
 
     public boolean save(String name) throws IOException, ClassNotFoundException {
         TreeMap<String, LinkedList<String>> direct = getMap();
-
-        //if(cat.categories.containsKey(name)) {
-            //return false;
-        //}
-        //else {
-            direct.put(name, new LinkedList<>());
-            saveMap(direct);
-            return true;
-        //}
-
+        direct.put(name, new LinkedList<>());
+        saveMap(direct);
+        return true;
     }
 
     public boolean update(String oldName, String newName) throws IOException, ClassNotFoundException {

@@ -1,11 +1,8 @@
 package com.example.thoughtstream.utils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,24 +10,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.ref.WeakReference;
 import java.util.LinkedList;
+import java.util.TreeMap;
 
 public class ThoughtFunctions extends AppCompatActivity {
 
-    private static Gson gson;
     private String defaultCategory;
+    private WeakReference<Context> appContext;
+    private TreeMap<String, LinkedList<String>> direct;
 
-    ThoughtFunctions(String category){
-        gson = new Gson();
+    ThoughtFunctions(String category, Context context) throws ClassNotFoundException {
         defaultCategory = category;
+        appContext = new WeakReference<>(context);
+        CategoryFunctions cf = new CategoryFunctions(context);
+        direct = cf.getMap();
     }
 
     private LinkedList<String> getThoughtList(){
-        SharedPreferences pref = getSharedPreferences("categories", Context.MODE_PRIVATE);
-        String encrypted = pref.toString();
-        Directory collection = gson.fromJson(encrypted, Directory.class);
 
-        return collection.categories.get(defaultCategory);
+        return direct.get(defaultCategory);
     }
 
     public Object[] loadDirectory(){
@@ -58,7 +57,7 @@ public class ThoughtFunctions extends AppCompatActivity {
     }
 
     public boolean save(String name, String content){
-        String filename = defaultCategory + "_" + name + ".txt";
+        String filename = appContext.get().getFilesDir().getPath()+ defaultCategory + "_" + name + ".txt";
 
         if(getThoughtList().contains(filename)){
             return false;
