@@ -1,5 +1,6 @@
 package com.example.thoughtstream.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -28,6 +29,23 @@ public class ThoughtCategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thought_categories);
 
+        loadDirectory();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ImageView plusImg = findViewById(R.id.imageViewAddButton);
+        plusImg.setOnClickListener(view -> {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            NewCategoryFragment dialogFragment = new NewCategoryFragment();
+            dialogFragment.show(fragmentManager, "Sample Fragment");
+        });
+        loadDirectory();
+    }
+
+    private void loadDirectory(){
         listView = findViewById(R.id.category_listview);
 
         cf = new CategoryFunctions(getApplicationContext());
@@ -41,21 +59,11 @@ public class ThoughtCategoriesActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>
                 (ThoughtCategoriesActivity.this, android.R.layout.simple_list_item_1, ListElementsArrayList);
         listView.setAdapter(adapter);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ImageView plusImg = findViewById(R.id.imageViewAddButton);
-        plusImg.setOnClickListener(view -> {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            NewCategoryFragment dialogFragment = new NewCategoryFragment();
-            dialogFragment.show(fragmentManager, "Sample Fragment");
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedItem = (String) parent.getItemAtPosition(position);
+            Intent intent = new Intent(ThoughtCategoriesActivity.this, ThoughtsActivity.class);
+            intent.putExtra("Category", selectedItem);
+                startActivity(intent);
         });
-    }
-
-    private void loadCategories() {
-
     }
 }

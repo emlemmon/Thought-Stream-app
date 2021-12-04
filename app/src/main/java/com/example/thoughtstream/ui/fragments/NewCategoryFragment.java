@@ -46,7 +46,7 @@ public class NewCategoryFragment extends DialogFragment {
             EditText nameContents = rootView.findViewById(R.id.editTextCategoryTitle);
             String newCategoryName = nameContents.getText().toString();
             try {
-                if(directory.save(newCategoryName)){
+                if(directory.saveNew(newCategoryName)){
                     Toast.makeText(mContext, "Category Saved!", Toast.LENGTH_SHORT).show();
                 }
             } catch (IOException | ClassNotFoundException e) {

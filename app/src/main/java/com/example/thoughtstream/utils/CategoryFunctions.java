@@ -76,9 +76,16 @@ public class CategoryFunctions extends AppCompatActivity {
 
     }
 
-    public boolean save(String name) throws IOException, ClassNotFoundException {
+    public boolean saveNew(String name) throws IOException, ClassNotFoundException {
         TreeMap<String, LinkedList<String>> direct = getMap();
         direct.put(name, new LinkedList<>());
+        saveMap(direct);
+        return true;
+    }
+
+    public boolean saveList(String name, LinkedList<String> contents) throws ClassNotFoundException, IOException {
+        TreeMap<String, LinkedList<String>> direct = getMap();
+        direct.put(name, contents);
         saveMap(direct);
         return true;
     }
