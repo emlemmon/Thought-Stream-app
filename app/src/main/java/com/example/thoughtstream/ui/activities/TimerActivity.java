@@ -8,11 +8,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thoughtstream.R;
@@ -28,6 +30,7 @@ public class TimerActivity extends AppCompatActivity {
     private Button mButtonStart;
     private Button mButtonPause;
     private Button mButtonReset;
+    private ProgressBar progressBar;
 
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
@@ -35,6 +38,8 @@ public class TimerActivity extends AppCompatActivity {
     private long mStartTimeInMillis;
     private long mTimeLeftInMillis;
     private long mEndTime;
+    private int progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ public class TimerActivity extends AppCompatActivity {
         mButtonStart = findViewById(R.id.button_start);
         mButtonPause = findViewById(R.id.button_pause);
         mButtonReset = findViewById(R.id.button_reset);
+        progressBar = findViewById(R.id.progress_bar);
         NumberPicker hoursPicker = findViewById(R.id.hoursPicker);
         NumberPicker minutesPicker = findViewById(R.id.minutesPicker);
         NumberPicker secondsPicker = findViewById(R.id.secondsPicker);
@@ -60,6 +66,7 @@ public class TimerActivity extends AppCompatActivity {
         AtomicLong hoursInMillis = new AtomicLong();
         AtomicLong minutesInMillies = new AtomicLong();
         AtomicLong secondsInMillies = new AtomicLong();
+        progress = 0;
 
         hoursPicker.setOnValueChangedListener((picker, oldVal, newVal) -> hoursInMillis.set(((long) newVal * 60) * 60000));
 
@@ -68,9 +75,12 @@ public class TimerActivity extends AppCompatActivity {
         secondsPicker.setOnValueChangedListener((picker, oldVal, newVal) -> secondsInMillies.set((long) newVal * 1000));
 
         mButtonSet.setOnClickListener(v -> {
-            long millisInput =  hoursInMillis.get() + minutesInMillies.get() + secondsInMillies.get();
-
-            setTime(millisInput);
+            if (hoursInMillis.get() == 0 && minutesInMillies.get() == 0 && secondsInMillies.get() == 0) {
+                Toast.makeText(TimerActivity.this, "Cannot begin a blank timer", Toast.LENGTH_SHORT).show();
+            } else {
+                long millisInput =  hoursInMillis.get() + minutesInMillies.get() + secondsInMillies.get();
+                setTime(millisInput);
+            }
         });
         
         mButtonStart.setOnClickListener(v -> {
@@ -92,10 +102,9 @@ public class TimerActivity extends AppCompatActivity {
     private void setTime(long milliseconds) {
         mStartTimeInMillis = milliseconds;
         resetTimer();
-        closeKeyboard();
     }
 
-    private void startAlarm(Calendar alarmTime) {
+    private void startAlarm(@NonNull Calendar alarmTime) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
@@ -129,6 +138,32 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis = millisUntilFinished;
+
+                if (mTimeLeftInMillis < mStartTimeInMillis * .9 && mTimeLeftInMillis > mStartTimeInMillis * .8) {
+                    progress = 10;
+                } else if (mTimeLeftInMillis < mStartTimeInMillis * .8 && mTimeLeftInMillis > mStartTimeInMillis * .7) {
+                    progress = 20;
+                } else if (mTimeLeftInMillis < mStartTimeInMillis * .7 && mTimeLeftInMillis > mStartTimeInMillis * .6) {
+                    progress = 30;
+                } else if (mTimeLeftInMillis < mStartTimeInMillis * .6 && mTimeLeftInMillis > mStartTimeInMillis * .5) {
+                    progress = 40;
+                } else if (mTimeLeftInMillis < mStartTimeInMillis * .5 && mTimeLeftInMillis > mStartTimeInMillis * .4) {
+                    progress = 50;
+                } else if (mTimeLeftInMillis < mStartTimeInMillis * .4 && mTimeLeftInMillis > mStartTimeInMillis * .3) {
+                    progress = 60;
+                } else if (mTimeLeftInMillis < mStartTimeInMillis * .3 && mTimeLeftInMillis > mStartTimeInMillis * .2) {
+                    progress = 70;
+                } else if (mTimeLeftInMillis < mStartTimeInMillis * .2 && mTimeLeftInMillis > mStartTimeInMillis * .1) {
+                    progress = 80;
+                } else if (mTimeLeftInMillis < mStartTimeInMillis * .1 && mTimeLeftInMillis > 0) {
+                    progress = 90;
+                }
+
+                if ( mTimeLeftInMillis < 1000) {
+                    progress = 100;
+                }
+
+                progressBar.setProgress(progress);
                 updateCountDownText();
             }
 
@@ -152,6 +187,8 @@ public class TimerActivity extends AppCompatActivity {
     private void resetTimer() {
         mTimeLeftInMillis = mStartTimeInMillis;
         cancelAlarm();
+        progress = 0;
+        progressBar.setProgress(progress);
         updateCountDownText();
         updateWatchInterface();
     }
@@ -195,14 +232,6 @@ public class TimerActivity extends AppCompatActivity {
             } else {
                 mButtonReset.setVisibility(View.INVISIBLE);
             }
-        }
-    }
-
-    private void closeKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
@@ -255,89 +284,3 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 }
-
-
-//        package com.example.thoughtstream;
-//
-//        import android.animation.ObjectAnimator;
-//        <<<<<<<< HEAD:app/src/main/java/com/example/thoughtstream/TimerActivity.java
-//        import android.os.Bundle;
-//        import android.os.Handler;
-//        ========
-//        import android.content.Intent;
-//        import android.content.res.Resources;
-//        import android.graphics.drawable.Drawable;
-//        import android.os.Handler;
-//        import android.os.Bundle;
-//        import android.view.View;
-//        >>>>>>>> a9468863f67759a1629c2e1b00a04ff7a170ea59:app/src/main/java/com/example/progressbarpractice/MainActivity.java
-//        import android.view.animation.DecelerateInterpolator;
-//        import android.widget.Button;
-//        import android.widget.ProgressBar;
-//        import android.widget.TextView;
-//
-//        import androidx.appcompat.app.AppCompatActivity;
-//
-//public class TimerActivity extends AppCompatActivity {
-//
-//    private final Handler handler = new Handler();
-//
-//    TextView tv;
-//
-//<<<<<<<< HEAD:app/src/main/java/com/example/thoughtstream/TimerActivity.java
-//========
-//    private Button TESTINGBUTTON;
-//
-//>>>>>>>> a9468863f67759a1629c2e1b00a04ff7a170ea59:app/src/main/java/com/example/progressbarpractice/MainActivity.java
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_timer);
-//        final ProgressBar mProgress = (ProgressBar) findViewById(R.id.circularProgressbar);
-//        mProgress.setProgress(0);   // Main Progress
-//        mProgress.setSecondaryProgress(100); // Secondary Progress
-//        mProgress.setMax(100); // Maximum Progress
-//        ObjectAnimator animation = ObjectAnimator.ofInt(mProgress, "progress", 0, 100);
-//        animation.setDuration(50000);
-//        animation.setInterpolator(new DecelerateInterpolator());
-//        animation.start();
-//        tv = (TextView) findViewById(R.id.tv);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                // TODO Auto-generated method stub
-//                while (mProgress.getProgress() <= 100) {
-//                    handler.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            // TODO Auto-generated method stub
-//                            tv.setText(mProgress.getProgress() + "%");
-//                        }
-//                    });
-//                    try {
-//                        // Sleep for 200 milliseconds.
-//                        // Just to display the progress slowly
-//                        Thread.sleep(16); //thread will take approx 3 seconds to finish
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }).start();
-//
-//        TESTINGBUTTON = findViewById(R.id.button_send);
-//        TESTINGBUTTON.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                goTotimer(v);
-//            }
-//        });
-//
-//    }
-//
-//    public void goTotimer (View view) {
-//        Intent intent = new Intent(this, TimerActivity.class);
-//        startActivity(intent);
-//    }
-//}
-

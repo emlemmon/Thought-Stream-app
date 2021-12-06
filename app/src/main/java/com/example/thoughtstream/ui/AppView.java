@@ -1,4 +1,4 @@
-package com.example.thoughtstream.ui.fragments;
+package com.example.thoughtstream.ui;
 
 import java.util.LinkedList;
 import java.util.Map;

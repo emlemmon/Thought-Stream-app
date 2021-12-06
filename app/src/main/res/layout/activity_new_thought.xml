@@ -8,15 +8,16 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/app_bar"
-            app:title="@string/new_thought_btn_text"
-            app:titleTextColor="#081768"
-            android:background="#fad2e1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="wrap_content"
+            android:background="#fad2e1"
+            app:title="@string/new_thought_btn_text"
+            app:titleTextColor="#081768"></androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -77,12 +78,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/create_text"
         android:backgroundTint="#081768"
         android:cursorVisible="true"
         android:fontFamily="sans-serif-condensed"
+        android:text="@string/create_text"
         android:textSize="18dp"
         app:cornerRadius="40dp"
         app:layout_constraintDimensionRatio="6:1"
