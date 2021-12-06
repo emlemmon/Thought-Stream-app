@@ -1,4 +1,4 @@
-package com.example.thoughtstream.ui.activities;
+package com.example.thoughtstream.utils;
 
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
