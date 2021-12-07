@@ -2,7 +2,6 @@ package com.example.thoughtstream.ui;
 
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
-import android.util.Log;
 
 
 public class TimerPresenter implements TimerContract.Presenter {
@@ -20,15 +19,13 @@ public class TimerPresenter implements TimerContract.Presenter {
         if (!timerModel.getmTimerRunning()) {
                 startTimer();
                 timerView.updateCountDownText(timerModel.getmTimeLeftInMillis(), timerModel.getProgress());
-                timerView.startAlarm(timerModel.getAlarmTime());
         }
     }
     
     private void startTimer() {
         timerModel.startTimer();
-
+        timerView.startAlarm(timerModel.getAlarmTime());
         long timeLeft = timerModel.getmTimeLeftInMillis();
-
 
         timerModel.setmCountDownTimer(new CountDownTimer(timeLeft, 1000) {
             @Override

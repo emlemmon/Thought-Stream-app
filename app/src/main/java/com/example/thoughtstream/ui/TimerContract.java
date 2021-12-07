@@ -12,7 +12,7 @@ public interface TimerContract {
     interface View {
         void updateCountDownText(long mTimeLeftInMillis, int progress);
         void updateWatchInterface(long mTimeLeftInMillis, boolean mTimerRunning, long mStartTimeInMillis);
-        void startAlarm(@NonNull Calendar alarmTime);
+        void startAlarm(long alarmTime);
         void cancelAlarm();
     }
     interface Presenter {
@@ -45,7 +45,7 @@ public interface TimerContract {
 
         int getProgress();
 
-        Calendar getAlarmTime();
+        long getAlarmTime();
 
         void setmCountDownTimer(CountDownTimer mCountDownTimer);
 
