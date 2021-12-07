@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_text"
-        android:textColor="@color/black"
+        android:textColor="?colorOnPrimary"
         android:textSize="20sp" />
 
     <EditText
@@ -28,10 +28,11 @@
         android:id="@+id/buttonCreate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#081768"
+        android:backgroundTint="?colorSecondary"
         android:cursorVisible="true"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/create_text"
+        android:textColor="?colorOnSecondary"
         android:textSize="20sp"
         app:cornerRadius="40dp" />
 

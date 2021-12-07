@@ -2,13 +2,13 @@
     <!-- Base application theme. -->
     <style name="Theme.ThoughtStreamApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">#081768</item>
+        <item name="colorPrimaryVariant">#040c3a</item>
+        <item name="colorOnPrimary">#fad2e1</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">#fad2e1</item>
+        <item name="colorSecondaryVariant">#eae4e9</item>
+        <item name="colorOnSecondary">#081768</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
