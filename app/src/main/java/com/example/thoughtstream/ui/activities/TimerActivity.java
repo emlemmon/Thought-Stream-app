@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thoughtstream.R;
@@ -23,7 +22,6 @@ import com.example.thoughtstream.ui.TimerPresenter;
 import com.example.thoughtstream.utils.AlertReceiver;
 import com.example.thoughtstream.utils.TimerModel;
 
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -129,16 +127,12 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         }
     }
 
-    public void startAlarm(@NonNull Calendar alarmTime) {
+    public void startAlarm(long alarmTime) {
         mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
-        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
 
-        if (alarmTime.before(Calendar.getInstance())) {
-            alarmTime.add(Calendar.DATE, 1);
-        }
-
-        mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+        mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
     }
 
     public void cancelAlarm() {

@@ -1,11 +1,8 @@
 package com.example.thoughtstream.utils;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import com.example.thoughtstream.ui.TimerContract;
-
-import java.util.Calendar;
 
 
 public class TimerModel implements TimerContract.Model{
@@ -50,7 +47,7 @@ public class TimerModel implements TimerContract.Model{
         this.mEndTime = mEndTime;
     }
 
-    public Calendar getAlarmTime() {
+    public long getAlarmTime() {
         return alarmTime;
     }
 
@@ -62,18 +59,13 @@ public class TimerModel implements TimerContract.Model{
     private long mTimeLeftInMillis;
     private long mEndTime;
     private int progress;
-    private Calendar alarmTime;
+    private long alarmTime;
 
     @Override
     public void startTimer() {
         setmTimerRunning(true);
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
-        int hours = (int) (mEndTime / 1000) / 3600;
-        int minutes = (int) ((mEndTime / 1000) % 3600) / 60;
-        alarmTime = Calendar.getInstance();
-        alarmTime.set(Calendar.HOUR_OF_DAY, hours);
-        alarmTime.set(Calendar.MINUTE, minutes);
-        alarmTime.set(Calendar.SECOND, 0);
+        alarmTime = mEndTime;
     }
 
     @Override
