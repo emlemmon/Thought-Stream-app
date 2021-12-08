@@ -35,7 +35,7 @@
         app:layout_constraintDimensionRatio="7:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout4" />
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout4" />
 
 <!--    <TextView-->
 <!--        android:id="@+id/textViewSelectCategory"-->
@@ -96,7 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dropdown" />
+        app:layout_constraintTop_toBottomOf="@id/dropdown" />
 
     <Button
         android:id="@+id/buttonCreate"
@@ -115,7 +115,7 @@
         app:layout_constraintDimensionRatio="6:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMultiLineThought" />
+        app:layout_constraintTop_toBottomOf="@id/editTextMultiLineThought" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thoughtstream.R;
-import com.example.thoughtstream.utils.ThoughtFunctions;
+import com.example.thoughtstream.utils.ThoughtPresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +19,7 @@ import java.util.List;
 
 public class ThoughtsActivity extends AppCompatActivity {
 
-    ThoughtFunctions tf;
-    String[] directory;
+    ThoughtPresenter tf;
     ListView listView;
     String categorySelect;
 
@@ -51,10 +50,9 @@ public class ThoughtsActivity extends AppCompatActivity {
     private void loadDirectory() throws ClassNotFoundException {
         listView = findViewById(R.id.thoughts_listview);
 
-        tf = new ThoughtFunctions(categorySelect, getApplicationContext());
-        directory = tf.loadDirectory();
+        tf = new ThoughtPresenter(categorySelect, getApplicationContext());
 
-        List<String> ListElementsArrayList = new ArrayList<>(Arrays.asList(directory));
+        List<String> ListElementsArrayList = new ArrayList<>(Arrays.asList(tf.loadDirectory()));
         ArrayAdapter<String> adapter = new ArrayAdapter<>
                 (ThoughtsActivity.this, android.R.layout.simple_list_item_1, ListElementsArrayList);
         listView.setAdapter(adapter);

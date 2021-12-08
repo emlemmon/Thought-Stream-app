@@ -2,7 +2,6 @@ package com.example.thoughtstream.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -14,17 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thoughtstream.R;
-import com.example.thoughtstream.utils.CategoryFunctions;
-import com.example.thoughtstream.utils.ThoughtFunctions;
+import com.example.thoughtstream.utils.CategoryPresenter;
+import com.example.thoughtstream.utils.ThoughtPresenter;
 
 import java.io.IOException;
 
 public class NewThoughtActivity extends AppCompatActivity {
 
     private String category;
-    private String title;
-    private ThoughtFunctions tf;
-    private CategoryFunctions cf;
+    private ThoughtPresenter tf;
+    private CategoryPresenter cf;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +30,7 @@ public class NewThoughtActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_thought);
 
         String filename = "";
-        Boolean existing = false;
+        boolean existing = false;
         if(getIntent().getExtras() != null) {
             category = getIntent().getStringExtra("Category");
             filename = getIntent().getStringExtra("Filename");
@@ -45,15 +43,15 @@ public class NewThoughtActivity extends AppCompatActivity {
         }
 
         try {
-            tf = new ThoughtFunctions(category, getApplicationContext());
-            cf = new CategoryFunctions(this.getApplicationContext());
+            tf = new ThoughtPresenter(category, getApplicationContext());
+            cf = new CategoryPresenter(this.getApplicationContext());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         try {
-            String[] categoriesArray = cf.load().clone();
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_item, categoriesArray);
+            String[] categoriesArray = cf.load();
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, categoriesArray);
             AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
             autoCompleteTextView.setAdapter(arrayAdapter);
         } catch (ClassNotFoundException e) {
@@ -63,12 +61,7 @@ public class NewThoughtActivity extends AppCompatActivity {
         if(existing) {
             TextView textTitle = findViewById(R.id.editTextTitle);
             TextView textContent = findViewById(R.id.editTextMultiLineThought);
-            int titleIndexBegin = filename.indexOf("{");
-            Log.i("IndexBegin", String.valueOf(titleIndexBegin));
-            int titleIndexEnd = filename.indexOf("_");
-            Log.i("IndexEnd", String.valueOf(titleIndexEnd));
-            title = filename.substring(titleIndexBegin, titleIndexEnd);
-            textTitle.setText(title);
+            textTitle.setText(filename);
             String contents = "";
             try {
                 contents = tf.loadFile(filename);

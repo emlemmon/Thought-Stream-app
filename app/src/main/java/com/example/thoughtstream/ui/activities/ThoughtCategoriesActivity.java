@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.thoughtstream.R;
 import com.example.thoughtstream.ui.fragments.NewCategoryFragment;
-import com.example.thoughtstream.utils.CategoryFunctions;
+import com.example.thoughtstream.utils.CategoryPresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ThoughtCategoriesActivity extends AppCompatActivity {
 
-    CategoryFunctions cf;
+    CategoryPresenter cf;
     String[] directory;
     ListView listView;
 
@@ -48,7 +48,7 @@ public class ThoughtCategoriesActivity extends AppCompatActivity {
     private void loadDirectory(){
         listView = findViewById(R.id.category_listview);
 
-        cf = new CategoryFunctions(getApplicationContext());
+        cf = new CategoryPresenter(getApplicationContext());
         try {
             directory = cf.load();
         } catch (ClassNotFoundException e) {

@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.thoughtstream.R;
-import com.example.thoughtstream.utils.CategoryFunctions;
+import com.example.thoughtstream.utils.CategoryPresenter;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -42,7 +42,7 @@ public class NewCategoryFragment extends DialogFragment {
         Objects.requireNonNull(getDialog()).setTitle("Create A Category");
         Button saveButton = rootView.findViewById(R.id.buttonCreate);
         saveButton.setOnClickListener(view -> {
-            CategoryFunctions directory = new CategoryFunctions(mContext);
+            CategoryPresenter directory = new CategoryPresenter(mContext);
             EditText nameContents = rootView.findViewById(R.id.editTextCategoryTitle);
             String newCategoryName = nameContents.getText().toString();
             try {
