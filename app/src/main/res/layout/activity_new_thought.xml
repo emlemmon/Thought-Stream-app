@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,7 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif-condensed"
         android:hint="@string/title_hint"
@@ -34,25 +35,48 @@
         app:layout_constraintDimensionRatio="7:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout4" />
 
-    <TextView
-        android:id="@+id/textViewSelectCategory"
-        style="?android:attr/spinnerItemStyle"
+<!--    <TextView-->
+<!--        android:id="@+id/textViewSelectCategory"-->
+<!--        style="?android:attr/spinnerItemStyle"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:ellipsize="marquee"-->
+<!--        android:singleLine="true"-->
+<!--        android:text="@string/select_category_text"-->
+<!--        android:textSize="20sp"-->
+<!--        android:fontFamily="sans-serif-condensed"-->
+<!--        app:layout_constraintDimensionRatio="10:1"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dropdown"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="@string/select_category_text"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-condensed"
-        app:layout_constraintDimensionRatio="10:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
+        android:layout_marginStart="16dp"
+        app:layout_constraintDimensionRatio="6:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextTitle">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:text="@string/choose_a_category_text"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
         android:id="@+id/editTextMultiLineThought"
@@ -63,15 +87,16 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
+        android:fontFamily="sans-serif-condensed"
         android:gravity="start|top"
+        android:hint="@string/enter_thought_text"
         android:inputType="textMultiLine"
         android:textSize="20sp"
-        android:hint="Enter thought here"
-        android:fontFamily="sans-serif-condensed"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSelectCategory" />
+        app:layout_constraintTop_toBottomOf="@+id/dropdown" />
 
     <Button
         android:id="@+id/buttonCreate"

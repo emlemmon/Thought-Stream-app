@@ -16,4 +16,6 @@
     <string name="timer_activity_num_picker_hours_prompt">Hours</string>
     <string name="timer_activity_num_picker_minutes_prompt">Minutes</string>
     <string name="timer_activity_num_picker_seconds_prompt">Seconds</string>
+    <string name="enter_thought_text">Enter thought here</string>
+    <string name="choose_a_category_text">Choose a Category</string>
 </resources>
