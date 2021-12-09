@@ -146,18 +146,14 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     @Override
     protected void onStop() {
         super.onStop();
-
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         timerPresenter.stop(prefs);
     }
 
-    @Override
+
     protected void onStart() {
         super.onStart();
-
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-
         timerPresenter.start(prefs);
-
     }
 }

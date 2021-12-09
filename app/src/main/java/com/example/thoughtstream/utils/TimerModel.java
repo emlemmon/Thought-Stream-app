@@ -95,8 +95,7 @@ public class TimerModel implements TimerContract.Model{
         this.mCountDownTimer = mCountDownTimer;
     }
 
-    public int setProgress(int progress) {
+    public void setProgress(int progress) {
         this.progress = progress;
-        return progress;
     }
 }
