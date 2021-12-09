@@ -2,6 +2,7 @@ package com.example.thoughtstream.ui;
 
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.util.Log;
 
 
 public class TimerPresenter implements TimerContract.Presenter {
@@ -278,6 +279,14 @@ public class TimerPresenter implements TimerContract.Presenter {
         timerView.updateWatchInterface(timerModel.getmTimeLeftInMillis(), timerModel.getmTimerRunning(), timerModel.getmStartTimeInMillis());
     }
 
+    public boolean timerRunning() {
+        return timerModel.getmTimerRunning();
+    }
+
+    public int progress() {
+        return timerModel.getProgress();
+    }
+
     @Override
     public void stop(SharedPreferences prefs) {
         SharedPreferences.Editor editor = prefs.edit();
@@ -307,7 +316,7 @@ public class TimerPresenter implements TimerContract.Presenter {
         if (timerModel.getmTimerRunning()) {
             timerModel.setmEndTime(prefs.getLong("endTime", 0));
             timerModel.setmTimeLeftInMillis(timerModel.getmEndTime() - System.currentTimeMillis());
-            timerModel.startTimer();
+            startTimer();
 
             if (timerModel.getmTimeLeftInMillis() < 0) {
                 timerModel.setmTimeLeftInMillis(0);
@@ -315,7 +324,7 @@ public class TimerPresenter implements TimerContract.Presenter {
                 timerView.updateCountDownText(timerModel.getmTimeLeftInMillis(), timerModel.getProgress());
                 timerView.updateWatchInterface(timerModel.getmTimeLeftInMillis(), timerModel.getmTimerRunning(), timerModel.getmStartTimeInMillis());
             } else {
-                timerModel.startTimer();
+                startTimer();
             }
         }
     }

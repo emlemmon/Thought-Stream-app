@@ -3,10 +3,6 @@ package com.example.thoughtstream.ui;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 
-import androidx.annotation.NonNull;
-
-import java.util.Calendar;
-
 public interface TimerContract {
 
     interface View {
@@ -49,6 +45,6 @@ public interface TimerContract {
 
         void setmCountDownTimer(CountDownTimer mCountDownTimer);
 
-        int setProgress(int i);
+        void setProgress(int i);
     }
 }
