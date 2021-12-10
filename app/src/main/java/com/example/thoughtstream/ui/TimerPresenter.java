@@ -10,11 +10,15 @@ public class TimerPresenter implements TimerContract.Presenter {
     private final TimerContract.View timerView;
     private final TimerContract.Model timerModel;
 
+    /* Constructor for TimerPresenter. Initializes a refernece to the Model and the View when created.*/
     public TimerPresenter(TimerContract.View view, TimerContract.Model model) {
         this.timerView = view;
         this.timerModel = model;
     }
 
+    /* Function: onStartButtonClick()
+     * Purpose: Called when the start button is clicked in the View. Starts the CountDown Timer
+     *          and instructs the View to update its CountDownText*/
     @Override
     public void onStartButtonClick() {
         if (!timerModel.getmTimerRunning()) {
@@ -22,7 +26,10 @@ public class TimerPresenter implements TimerContract.Presenter {
                 timerView.updateCountDownText(timerModel.getmTimeLeftInMillis(), timerModel.getProgress());
         }
     }
-    
+
+    /* Function: startTimer()
+     * Purpose: Begin the CountDownTimer, count each tick, update the time left until complete and
+     *          progress towards completion.*/
     private void startTimer() {
         timerModel.startTimer();
         timerView.startAlarm(timerModel.getAlarmTime());
@@ -36,6 +43,11 @@ public class TimerPresenter implements TimerContract.Presenter {
                 long mStartTimeInMillis = timerModel.getmStartTimeInMillis();
                 int progress = timerModel.getProgress();
 
+                /* Calculate what percentage of time has elapsed in the CountDownTimer. Convert the
+                * percentage to an int and store it in progress.
+                * This series of if...else if...else statements could be replaced with either a
+                * switch-case or potentially a series or single equation, but time constraints did
+                * not permit simplification.*/
                 if (mTimeLeftInMillis < mStartTimeInMillis * .99 && mTimeLeftInMillis > mStartTimeInMillis * .98) {
                     progress = 1;
                 } else if (mTimeLeftInMillis < mStartTimeInMillis * .98 && mTimeLeftInMillis > mStartTimeInMillis * .97) {
@@ -240,6 +252,8 @@ public class TimerPresenter implements TimerContract.Presenter {
                     progress = 100;
                 }
 
+                /* Store the progress in the Model and instruct the View to update its circular
+                * progress bar and clock display.*/
                 timerModel.setProgress(progress);
                 timerView.updateCountDownText(timerModel.getmTimeLeftInMillis(), timerModel.getProgress());
             }
@@ -255,6 +269,10 @@ public class TimerPresenter implements TimerContract.Presenter {
         timerView.updateWatchInterface(timerModel.getmTimeLeftInMillis(), timerModel.getmTimerRunning(), timerModel.getmStartTimeInMillis());
     }
 
+    /* Function: onPauseButtonClick()
+     * Purpose: When the pause button is clicked, verify that the timer is running, if it is then
+     *          instruct the timer to pause, instruct the view to cancel the AlarmManager and update
+     *          the visible/invisible buttons.*/
     @Override
     public void onPauseButtonClick() {
         if (timerModel.getmTimerRunning()) {
@@ -264,6 +282,10 @@ public class TimerPresenter implements TimerContract.Presenter {
         }
     }
 
+    /* Function: onResetButtonClick()
+     * Purpose: When the reset button is clicked, instruct the Model to reset the timer to its pre-
+     *          running state. Instruct the View to cancel the AlarmManager, update its Clock display,
+     *          Circular Progress bar display, and its visible/invisible buttons.*/
     @Override
     public void onResetButtonClick() {
         timerModel.resetTimer();
@@ -272,6 +294,10 @@ public class TimerPresenter implements TimerContract.Presenter {
         timerView.updateWatchInterface(timerModel.getmTimeLeftInMillis(), timerModel.getmTimerRunning(), timerModel.getmStartTimeInMillis());
     }
 
+    /* Function: onSetButtonClick()
+     * Purpose: When the set button is clicked, instruct the Model to set the initial state of the
+     *          timer to the user-specified value. Instruct the View to update its Clock display,
+     *          Circular Progress bar display, and its visible/invisible buttons.*/
     @Override
     public void onSetButtonClick(long millisInput) {
         timerModel.setTime(millisInput);
@@ -279,14 +305,9 @@ public class TimerPresenter implements TimerContract.Presenter {
         timerView.updateWatchInterface(timerModel.getmTimeLeftInMillis(), timerModel.getmTimerRunning(), timerModel.getmStartTimeInMillis());
     }
 
-    public boolean timerRunning() {
-        return timerModel.getmTimerRunning();
-    }
-
-    public int progress() {
-        return timerModel.getProgress();
-    }
-
+    /* Function: stop()
+    * Purpose: Save the state of the CountDownTimer to SharedPreferences.
+    * Parameter (prefs): A reference to Shared Preferences created in the View*/
     @Override
     public void stop(SharedPreferences prefs) {
         SharedPreferences.Editor editor = prefs.edit();
@@ -303,6 +324,9 @@ public class TimerPresenter implements TimerContract.Presenter {
         }
     }
 
+    /* Function: start()
+     * Purpose: Retrieve the state of the CountDownTimer from SharedPreferences.
+     * Parameter (prefs): A reference to Shared Preferences created in the View*/
     @Override
     public void start(SharedPreferences prefs) {
 
