@@ -36,6 +36,8 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     private TimerPresenter timerPresenter;
     private AlarmManager mAlarmManager;
 
+    /* Constructor for the Timer Activity screen. Creates references to the user interface and
+    * initializes them to their default state. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,8 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         mButtonPause = findViewById(R.id.button_pause);
         mButtonReset = findViewById(R.id.button_reset);
         progressBar = findViewById(R.id.progress_bar);
+
+        /* Initialize the scrolling number input. */
         NumberPicker hoursPicker = findViewById(R.id.hoursPicker);
         NumberPicker minutesPicker = findViewById(R.id.minutesPicker);
         NumberPicker secondsPicker = findViewById(R.id.secondsPicker);
@@ -64,12 +68,16 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         AtomicLong minutesInMillis = new AtomicLong();
         AtomicLong secondsInMillis = new AtomicLong();
 
+        /* Event listeners for each NumberPicker. When changed, the appropriate value is modified */
         hoursPicker.setOnValueChangedListener((picker, oldVal, newVal) -> hoursInMillis.set(((long) newVal * 60) * 60000));
 
         minutesPicker.setOnValueChangedListener((picker, oldVal, newVal) -> minutesInMillis.set((long) newVal * 60000));
 
         secondsPicker.setOnValueChangedListener((picker, oldVal, newVal) -> secondsInMillis.set((long) newVal * 1000));
 
+        /* Event listeners for each button. When clicked, the appropriate method in the Presenter is called.
+        * In the case of the Set Button, valid input is verified first before the Presenter is called since
+        * the CountDown Timer cannot be initialized with a value of 0*/
         mButtonSet.setOnClickListener(v -> {
             if (hoursInMillis.get() == 0 && minutesInMillis.get() == 0 && secondsInMillis.get() == 0) {
                 Toast.makeText(TimerActivity.this, "Cannot begin a blank timer", Toast.LENGTH_SHORT).show();
@@ -84,6 +92,11 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         mButtonReset.setOnClickListener(v -> timerPresenter.onResetButtonClick());
     }
 
+    /* Function: updateCountDownText()
+    * Purpose: Updates the clock at the center of the circular progress bar with a
+    *          visual countdown from the set time to 0.
+    * Parameter (mTimeLeftInMillis): How much time (in milliseconds) is left of the countdown timer
+    * Parameter (progress): How much progress has been made towards the end of the timer */
     public void updateCountDownText(long mTimeLeftInMillis, int progress) {
         int hours = (int) (mTimeLeftInMillis / 1000) / 3600;
         int minutes = (int) ((mTimeLeftInMillis / 1000) % 3600) / 60;
@@ -102,6 +115,12 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         progressBar.setProgress(progress);
     }
 
+    /* Function: updateWatchInterface()
+    * Purpose: Updates all buttons when called to hide unneccesary buttons and show
+    *          necessary buttons based on the current state of the timer.
+    * Parameter (mTimeLeftInMillis): How much time (in milliseconds) is left of the countdown timer
+    * Parameter (mTimerRunning): Whether or not the timer is actively running
+    * Parameter (mStartTimeInMillis): What time (in milliseconds) the timer was started*/
     public void updateWatchInterface(long mTimeLeftInMillis, boolean mTimerRunning, long mStartTimeInMillis) {
         if (mTimerRunning) {
             mButtonSet.setVisibility(View.INVISIBLE);
@@ -127,6 +146,10 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         }
     }
 
+    /* Function: startAlarm()
+    * Purpose: Use AlarmManager to set an alarm and send the user a notification when their timer hits 0
+    *          whether or not the TimerActivity is actively open.
+    * Parameter (alarmTime): The future time (in milliseconds) that the alarm should occur*/
     public void startAlarm(long alarmTime) {
         mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
@@ -135,6 +158,8 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
     }
 
+    /* Function: cancelAlarm()
+    * Purpose: Cancel the AlarmManager when the CountDown timer has been paused, reached 0, or been reset.*/
     public void cancelAlarm() {
         mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
@@ -143,6 +168,9 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         mAlarmManager.cancel(pendingIntent);
     }
 
+    /* Function: onStop()
+    * Purpose: Create a reference to SharedPreferences when the app is stopped and send it
+    *          to the Presenter so the current state of the CountDown Timer can be saved.*/
     @Override
     protected void onStop() {
         super.onStop();
@@ -150,7 +178,10 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         timerPresenter.stop(prefs);
     }
 
-
+    /* Function: onStart()
+     * Purpose: Create a reference to SharedPreferences when the app is started and send it
+     *          to the Presenter so the current state of the CountDown Timer can be retrieved.*/
+    @Override
     protected void onStart() {
         super.onStart();
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);

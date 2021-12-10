@@ -3,6 +3,8 @@ package com.example.thoughtstream.ui;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 
+/* the contract between teh View, Presenter, and Model. Ensures that all necessary cross-class
+* functions exist in each class and are referencable.*/
 public interface TimerContract {
 
     interface View {
