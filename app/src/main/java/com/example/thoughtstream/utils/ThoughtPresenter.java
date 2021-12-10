@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.ref.WeakReference;
@@ -67,23 +67,21 @@ public class ThoughtPresenter extends AppCompatActivity {
        Parameter (name): The name of the file.
        Returns (String): The contents of the respective file. It will be empty if no file of that name is present. */
     public String loadFile(String name) throws IOException {
-        String result = "";
+        String result;
         String filename = constructFileName(name);
         Log.i("Accessing File", filename);
-        InputStream inputStream = openFileInput(filename);
-        if(inputStream != null) {
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String temp;
-            StringBuilder stringBuilder = new StringBuilder();
+        FileInputStream inputStream = new FileInputStream(filename);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        String temp;
+        StringBuilder stringBuilder = new StringBuilder();
 
-            while((temp = bufferedReader.readLine()) != null){
-                stringBuilder.append(temp);
-            }
-
-            inputStream.close();
-            result = stringBuilder.toString();
+        while((temp = bufferedReader.readLine()) != null){
+            stringBuilder.append(temp);
         }
+
+        inputStream.close();
+        result = stringBuilder.toString();
         return result;
     }
 
