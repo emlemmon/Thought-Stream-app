@@ -1,8 +1,11 @@
 package com.example.thoughtstream.utils;
 
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 
+import com.example.thoughtstream.R;
 import com.example.thoughtstream.ui.TimerContract;
+import com.example.thoughtstream.ui.TimerPresenter;
 
 
 public class TimerModel implements TimerContract.Model{
@@ -121,7 +124,8 @@ public class TimerModel implements TimerContract.Model{
 
     /* Function: pauseTimer()
      * Purpose: Change the state of the timer from running to not running. Cancel the object \
-     *          CountDowntimer*/
+     *          CountDowntimer
+     *          Pause Music*/
     @Override
     public void pauseTimer() {
         mCountDownTimer.cancel();
@@ -138,7 +142,7 @@ public class TimerModel implements TimerContract.Model{
     }
 
     /* Function: cancelTimer()
-     * Purpose: Cancel the object mCountDownTimer*/
+     * Purpose: Cancel the object mCountDownTimer and release and nullify the MediaPlayer object music*/
     @Override
     public void cancelTimer() {
         mCountDownTimer.cancel();

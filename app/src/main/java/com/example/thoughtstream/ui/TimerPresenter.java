@@ -1,16 +1,22 @@
 package com.example.thoughtstream.ui;
 
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.util.Log;
+
+import com.example.thoughtstream.R;
+import com.example.thoughtstream.ui.activities.TimerActivity;
+import com.example.thoughtstream.utils.TimerModel;
 
 
 public class TimerPresenter implements TimerContract.Presenter {
 
     private final TimerContract.View timerView;
     private final TimerContract.Model timerModel;
+    public MediaPlayer music;
 
-    /* Constructor for TimerPresenter. Initializes a refernece to the Model and the View when created.*/
+    /* Constructor for TimerPresenter. Initializes a reference to the Model and the View when created.*/
     public TimerPresenter(TimerContract.View view, TimerContract.Model model) {
         this.timerView = view;
         this.timerModel = model;
@@ -24,6 +30,15 @@ public class TimerPresenter implements TimerContract.Presenter {
         if (!timerModel.getmTimerRunning()) {
                 startTimer();
                 timerView.updateCountDownText(timerModel.getmTimeLeftInMillis(), timerModel.getProgress());
+
+                /* Start the meditation music */
+            if (music != null) {
+                music.start();
+            } else {
+                music = MediaPlayer.create(timerView.getContext(), R.raw.ambient_sounds);
+                music.start();
+                music.setLooping(true);
+            }
         }
     }
 
@@ -262,9 +277,13 @@ public class TimerPresenter implements TimerContract.Presenter {
             public void onFinish() {
                 timerModel.setmTimerRunning(false);
                 timerView.updateWatchInterface(timerModel.getmTimeLeftInMillis(), timerModel.getmTimerRunning(), timerModel.getmStartTimeInMillis());
+                if (music != null) {
+                    music.release();
+                    music = null;
+                }
             }
         }.start());
-            
+
         timerModel.setmTimerRunning(true);
         timerView.updateWatchInterface(timerModel.getmTimeLeftInMillis(), timerModel.getmTimerRunning(), timerModel.getmStartTimeInMillis());
     }
@@ -272,13 +291,16 @@ public class TimerPresenter implements TimerContract.Presenter {
     /* Function: onPauseButtonClick()
      * Purpose: When the pause button is clicked, verify that the timer is running, if it is then
      *          instruct the timer to pause, instruct the view to cancel the AlarmManager and update
-     *          the visible/invisible buttons.*/
+     *          the visible/invisible buttons. Pause the music.*/
     @Override
     public void onPauseButtonClick() {
         if (timerModel.getmTimerRunning()) {
             timerModel.pauseTimer();
             timerView.cancelAlarm();
             timerView.updateWatchInterface(timerModel.getmTimeLeftInMillis(), timerModel.getmTimerRunning(), timerModel.getmStartTimeInMillis());
+            if (music != null) {
+                music.pause();
+            }
         }
     }
 
@@ -292,6 +314,12 @@ public class TimerPresenter implements TimerContract.Presenter {
         timerView.cancelAlarm();
         timerView.updateCountDownText(timerModel.getmTimeLeftInMillis(), timerModel.getProgress());
         timerView.updateWatchInterface(timerModel.getmTimeLeftInMillis(), timerModel.getmTimerRunning(), timerModel.getmStartTimeInMillis());
+
+     /* Release and nullify the MediaPlayer object music.*/
+        if (music != null) {
+            music.release();
+            music = null;
+        }
     }
 
     /* Function: onSetButtonClick()
@@ -321,6 +349,13 @@ public class TimerPresenter implements TimerContract.Presenter {
         CountDownTimer countDownTimer = timerModel.getmCountDownTimer();
         if (countDownTimer != null) {
             timerModel.cancelTimer();
+
+            /* Release and nullify the MediaPlayer object music.*/
+            if (music != null) {
+                music.pause();
+                music.release();
+                music = null;
+            }
         }
     }
 

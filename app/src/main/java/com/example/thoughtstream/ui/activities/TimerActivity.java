@@ -92,6 +92,11 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
         mButtonReset.setOnClickListener(v -> timerPresenter.onResetButtonClick());
     }
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
     /* Function: updateCountDownText()
     * Purpose: Updates the clock at the center of the circular progress bar with a
     *          visual countdown from the set time to 0.
@@ -116,7 +121,7 @@ public class TimerActivity extends AppCompatActivity implements TimerContract.Vi
     }
 
     /* Function: updateWatchInterface()
-    * Purpose: Updates all buttons when called to hide unneccesary buttons and show
+    * Purpose: Updates all buttons when called to hide unnecessary buttons and show
     *          necessary buttons based on the current state of the timer.
     * Parameter (mTimeLeftInMillis): How much time (in milliseconds) is left of the countdown timer
     * Parameter (mTimerRunning): Whether or not the timer is actively running

@@ -1,5 +1,6 @@
 package com.example.thoughtstream.ui;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 
@@ -8,6 +9,7 @@ import android.os.CountDownTimer;
 public interface TimerContract {
 
     interface View {
+        Context getContext();
         void updateCountDownText(long mTimeLeftInMillis, int progress);
         void updateWatchInterface(long mTimeLeftInMillis, boolean mTimerRunning, long mStartTimeInMillis);
         void startAlarm(long alarmTime);
