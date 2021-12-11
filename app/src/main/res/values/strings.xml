@@ -18,4 +18,5 @@
     <string name="timer_activity_num_picker_seconds_prompt">Seconds</string>
     <string name="enter_thought_text">Enter thought here</string>
     <string name="choose_a_category_text">Choose a Category</string>
+    <string name="new_category_text">New Category</string>
 </resources>
