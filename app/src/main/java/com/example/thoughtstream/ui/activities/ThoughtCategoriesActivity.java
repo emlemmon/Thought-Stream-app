@@ -40,16 +40,15 @@ public class ThoughtCategoriesActivity extends AppCompatActivity {
         plusImg.setOnClickListener(view -> {
             FragmentManager fragmentManager = getSupportFragmentManager();
             NewCategoryFragment dialogFragment = new NewCategoryFragment();
+            Bundle args = new Bundle();
+            args.putBoolean("LoadedFromDirectory", true);
+            dialogFragment.setArguments(args);
             dialogFragment.show(fragmentManager, "Sample Fragment");
         });
         loadDirectory();
     }
 
-    public void reloadDirectory() {
-        loadDirectory();
-    }
-
-    private void loadDirectory(){
+    public void loadDirectory(){
         listView = findViewById(R.id.category_listview);
 
         cf = new CategoryPresenter(getApplicationContext());
