@@ -12,10 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.thoughtstream.R;
-import com.example.thoughtstream.ui.fragments.NewCategoryFragment;
 import com.example.thoughtstream.utils.CategoryPresenter;
 import com.example.thoughtstream.utils.ThoughtPresenter;
 
@@ -55,7 +53,10 @@ public class NewThoughtActivity extends AppCompatActivity {
         }
 
         try {
-            loadCategories();
+            String[] categoriesArray = cf.load();
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, categoriesArray);
+            AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
+            autoCompleteTextView.setAdapter(arrayAdapter);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -77,16 +78,6 @@ public class NewThoughtActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Button categoryButton = findViewById(R.id.buttonNewCategory);
-        categoryButton.setOnClickListener(view -> {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            NewCategoryFragment dialogFragment = new NewCategoryFragment();
-            Bundle args = new Bundle();
-            args.putBoolean("LoadedFromDirectory", false);
-            dialogFragment.setArguments(args);
-            dialogFragment.show(fragmentManager, "Sample Fragment");
-        });
-
         AtomicBoolean success = new AtomicBoolean(false);
         Button btnCreate = findViewById(R.id.buttonCreate);
         btnCreate.setOnClickListener(view -> {
@@ -101,14 +92,6 @@ public class NewThoughtActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-    }
-
-    public void loadCategories() throws ClassNotFoundException {
-        String[] categoriesArray = cf.load();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, categoriesArray);
-        AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
-        autoCompleteTextView.setAdapter(arrayAdapter);
     }
 
     private boolean saveThought() throws IOException, ClassNotFoundException {
@@ -120,6 +103,7 @@ public class NewThoughtActivity extends AppCompatActivity {
         String newCategory = autoCompleteTextView.getText().toString();
         Log.i("Selected Category", newCategory);
         if(newCategory.equals("Choose a Category")){
+
             Toast.makeText(getApplicationContext(), "No Category Selected!", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -133,7 +117,7 @@ public class NewThoughtActivity extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(getApplicationContext(), "Cannot Save Duplicate Title!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Cannot Save Duplicate Title", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
