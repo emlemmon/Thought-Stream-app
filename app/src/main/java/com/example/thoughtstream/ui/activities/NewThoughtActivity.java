@@ -2,6 +2,7 @@ package com.example.thoughtstream.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -17,12 +18,14 @@ import com.example.thoughtstream.utils.CategoryPresenter;
 import com.example.thoughtstream.utils.ThoughtPresenter;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NewThoughtActivity extends AppCompatActivity {
 
     private String category;
     private ThoughtPresenter tf;
     private CategoryPresenter cf;
+    private String title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class NewThoughtActivity extends AppCompatActivity {
             category = getIntent().getStringExtra("Category");
             filename = getIntent().getStringExtra("Filename");
             existing = getIntent().getBooleanExtra("Existing", false);
-
+            title = filename;
         }
         else
         {
@@ -75,26 +78,61 @@ public class NewThoughtActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        AtomicBoolean success = new AtomicBoolean(false);
         Button btnCreate = findViewById(R.id.buttonCreate);
         btnCreate.setOnClickListener(view -> {
             try {
-                saveThought();
+                success.set(saveThought());
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(NewThoughtActivity.this, ThoughtsActivity.class);
-            intent.putExtra("Category", category);
-            startActivity(intent);
+            if(success.get()) {
+                Intent intent = new Intent(NewThoughtActivity.this, ThoughtsActivity.class);
+                intent.putExtra("Category", category);
+                startActivity(intent);
+            }
         });
     }
 
-    private void saveThought() throws IOException, ClassNotFoundException {
+    private boolean saveThought() throws IOException, ClassNotFoundException {
         EditText titleText = findViewById(R.id.editTextTitle);
         String titleName = titleText.getText().toString();
         EditText thoughtText = findViewById(R.id.editTextMultiLineThought);
         String thoughtContents = thoughtText.getText().toString();
+        AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
+        String newCategory = autoCompleteTextView.getText().toString();
+        Log.i("Selected Category", newCategory);
+        if(newCategory.equals("Choose a Category")){
+
+            Toast.makeText(getApplicationContext(), "No Category Selected!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(!newCategory.equals(category))
+        {
+            ThoughtPresenter ntf = new ThoughtPresenter(newCategory, getApplicationContext());
+            if(ntf.save(titleName, thoughtContents)){
+                tf.delete(title);
+                Toast.makeText(getApplicationContext(), "Thought Saved!", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Cannot Save Duplicate Title", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
         if(tf.save(titleName, thoughtContents)){
+            if(!titleName.equals(title))
+            {
+                tf.delete(title);
+            }
             Toast.makeText(getApplicationContext(), "Thought Saved!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Cannot Save Duplicate Title", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 }

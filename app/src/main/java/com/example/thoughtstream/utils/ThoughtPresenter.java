@@ -91,6 +91,12 @@ public class ThoughtPresenter extends AppCompatActivity {
        Parameter (content): The entire contents of the file to be saved.
        Returns (boolean): Indicates if operation was successful. Will return false if write operation fails. */
     public boolean save(String name, String content) throws IOException, ClassNotFoundException {
+        LinkedList<String> thoughts = getThoughtList();
+        if(thoughts.contains(name))
+        {
+            return false;
+        }
+
         String filename = constructFileName(name);
         FileOutputStream file = new FileOutputStream(filename);
 
@@ -104,31 +110,10 @@ public class ThoughtPresenter extends AppCompatActivity {
             return false;
         }
 
-        LinkedList<String> thoughts = getThoughtList();
         thoughts.add(name);
         cf.saveList(defaultCategory, thoughts);
 
         return true;
-    }
-
-    /* Function: update(String oldName, String newName)
-       Purpose: Renames file by saving a new file with newName and deleting the pre-existing one.
-       Parameter (oldName): The title of the file to be renamed.
-       Parameter (newName): The title of the file to be saved with 'oldName''s contents.
-       Returns (boolean): Indicates if operation was successful. Will return false if 'oldName' is not present in the directory. */
-    public boolean update(String oldName, String newName) throws IOException, ClassNotFoundException {
-        LinkedList<String> thoughts = getThoughtList();
-        int fileIndex = thoughts.indexOf(constructFileName(oldName));
-        if(fileIndex > -1)
-        {
-            save(newName, loadFile(oldName));
-            delete(oldName);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     /* Function: delete(String name)
@@ -136,15 +121,18 @@ public class ThoughtPresenter extends AppCompatActivity {
        Parameter (name): The title of the note to be deleted.
        Returns (boolean): Indicates if operation was successful. Will return false if 'name' is not present in directory,
                           or if the delete operation failed. */
-    public boolean delete(String name) {
+    public boolean delete(String name) throws IOException, ClassNotFoundException {
         String filename = constructFileName(name);
         LinkedList<String> thoughts = getThoughtList();
-        int fileIndex = thoughts.indexOf(filename);
+        int fileIndex = thoughts.indexOf(name);
         if(fileIndex > -1)
         {
-            File dir = getFilesDir();
-            File file = new File(dir, filename);
-            thoughts.remove(fileIndex);
+            Log.i("Deleting File", filename);
+            Log.i("Index", String.valueOf(fileIndex));
+            File file = new File(filename);
+            String deletedElement = thoughts.remove(fileIndex);
+            Log.i("Deleted", deletedElement);
+            cf.saveList(defaultCategory, thoughts);
             return (file.delete());
         }
         return false;
