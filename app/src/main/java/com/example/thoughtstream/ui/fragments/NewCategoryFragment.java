@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.thoughtstream.R;
-import com.example.thoughtstream.ui.activities.NewThoughtActivity;
 import com.example.thoughtstream.ui.activities.ThoughtCategoriesActivity;
 import com.example.thoughtstream.utils.CategoryPresenter;
 
@@ -42,8 +41,6 @@ public class NewCategoryFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_new_category, container, false);
         Objects.requireNonNull(getDialog()).setTitle("Create A Category");
-        Bundle args = getArguments();
-        boolean loadedFromDirectory = args.getBoolean("LoadedFromDirectory");
         Button saveButton = rootView.findViewById(R.id.buttonCreate);
         saveButton.setOnClickListener(view -> {
             CategoryPresenter directory = new CategoryPresenter(mContext);
@@ -52,13 +49,7 @@ public class NewCategoryFragment extends DialogFragment {
             try {
                 if(directory.saveNew(newCategoryName)){
                     Toast.makeText(mContext, "Category Saved!", Toast.LENGTH_SHORT).show();
-                    if(loadedFromDirectory){
-                        ((ThoughtCategoriesActivity) getActivity()).loadDirectory();
-                    }
-                    else
-                    {
-                        ((NewThoughtActivity) getActivity()).loadCategories();
-                    }
+                    ((ThoughtCategoriesActivity) getActivity()).reloadDirectory();
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
