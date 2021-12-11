@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.thoughtstream.R;
+import com.example.thoughtstream.ui.activities.ThoughtCategoriesActivity;
 import com.example.thoughtstream.utils.CategoryPresenter;
 
 import java.io.IOException;
@@ -48,6 +49,7 @@ public class NewCategoryFragment extends DialogFragment {
             try {
                 if(directory.saveNew(newCategoryName)){
                     Toast.makeText(mContext, "Category Saved!", Toast.LENGTH_SHORT).show();
+                    ((ThoughtCategoriesActivity) getActivity()).reloadDirectory();
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

@@ -45,6 +45,10 @@ public class ThoughtCategoriesActivity extends AppCompatActivity {
         loadDirectory();
     }
 
+    public void reloadDirectory() {
+        loadDirectory();
+    }
+
     private void loadDirectory(){
         listView = findViewById(R.id.category_listview);
 
