@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_gradient"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout4"
@@ -37,32 +37,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout4" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/textViewSelectCategory"-->
-    <!--        style="?android:attr/spinnerItemStyle"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_marginStart="16dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:layout_marginEnd="16dp"-->
-    <!--        android:ellipsize="marquee"-->
-    <!--        android:singleLine="true"-->
-    <!--        android:text="@string/select_category_text"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:fontFamily="sans-serif-condensed"-->
-    <!--        app:layout_constraintDimensionRatio="10:1"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewSelectCategory"-->
+<!--        style="?android:attr/spinnerItemStyle"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:ellipsize="marquee"-->
+<!--        android:singleLine="true"-->
+<!--        android:text="@string/select_category_text"-->
+<!--        android:textSize="20sp"-->
+<!--        android:fontFamily="sans-serif-condensed"-->
+<!--        app:layout_constraintDimensionRatio="10:1"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropdown"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintDimensionRatio="6:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -73,7 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="none"
-            android:text="@string/choose_a_category_text" />
+            android:text="@string/choose_a_category_text"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,8 +103,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="?colorSecondary"
         android:cursorVisible="true"
         android:fontFamily="sans-serif-condensed"
@@ -111,38 +112,10 @@
         android:textColor="?colorOnSecondary"
         android:textSize="18dp"
         app:cornerRadius="40dp"
-        app:layout_constraintDimensionRatio="3:1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintDimensionRatio="6:1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextMultiLineThought" />
-
-    <Button
-        android:id="@+id/buttonNewCategory"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="?colorSecondary"
-        android:cursorVisible="true"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/new_category_text"
-        android:textColor="?colorOnSecondary"
-        android:textSize="18dp"
-        app:cornerRadius="40dp"
-        app:layout_constraintDimensionRatio="3:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/editTextMultiLineThought" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
